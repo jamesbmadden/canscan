@@ -1,5 +1,5 @@
 <script setup>
-import { useTemplateRef, onMounted, ref } from 'vue'
+import { useTemplateRef, onMounted, ref, nextTick } from 'vue'
 import ScanResult from '../components/ScanResult.vue'
 
 const isScanned = ref(false)
@@ -26,6 +26,8 @@ const onScan = () => {
   viewfinder.value.pause()
   // end the stream
   cameraStream.getTracks().forEach(track => track.stop())
+
+  // update the ui
   isScanned.value = true
 
 }
@@ -49,7 +51,7 @@ onMounted(() => {
     <video ref="viewfinder" class="viewfinder" :class="isScanned ? 'minimize' : ''"></video>
 
     <!-- the result of the scan -->
-    <ScanResult v-if="isScanned" :state="1"></ScanResult>
+    <ScanResult :class="isScanned ? 'scan-result visible' : 'scan-result hidden'" :state="1"></ScanResult>
   </div>
 </template>
 
@@ -96,10 +98,12 @@ onMounted(() => {
 }
 .viewfinder {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   border-radius: 64px;
   background: white;
   object-fit: cover;
+  transition: height 0.2s;
+  flex-shrink: 0;
 }
 .viewfinder.minimize {
   aspect-ratio: 1 / 1;
