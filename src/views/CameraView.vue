@@ -1,6 +1,6 @@
 <script setup>
 import { useTemplateRef, onMounted, ref } from 'vue'
-import SectionFrame from '../components/SectionFrame.vue'
+import ScanResult from '../components/ScanResult.vue'
 
 const isScanned = ref(false)
 
@@ -42,16 +42,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="camera-header">
+  <div v-if="!isScanned" class="camera-header">
     <h1 class="title">CanScan</h1>
   </div>
   <div class="camera-panel-container">
     <video ref="viewfinder" class="viewfinder" :class="isScanned ? 'minimize' : ''"></video>
 
     <!-- the result of the scan -->
-    <SectionFrame v-if="isScanned" colour="#DD6868" gap="16px">
-      <p>scan result here</p>
-    </SectionFrame>
+    <ScanResult v-if="isScanned" :state="1"></ScanResult>
   </div>
 </template>
 

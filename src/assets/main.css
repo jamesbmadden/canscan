@@ -16,6 +16,11 @@ body {
   font-weight: 900;
   margin: 0;
 }
+.subtitle {
+  font-size: 32px;
+  font-weight: 900;
+  margin: 0;
+}
 
 .body {
   font-size: 18px;
